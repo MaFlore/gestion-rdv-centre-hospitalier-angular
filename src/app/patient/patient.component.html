@@ -1,0 +1,65 @@
+<div *ngIf="voirListesPatients">
+    <h2> Listes des patients</h2>
+    <button type="button" class="btn rounded-pill btn-primary" (click)="afficherFormulaire()">Ajouter</button>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Téléphone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let patient of patients; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ patient.nom }}</td>
+                <td>{{ patient.prenom }}</td>
+                <td>{{ patient.adresse }}</td>
+                <td>+228 {{ patient.telephone }}</td>
+                <td>
+                    <!--<button type="button" class="btn rounder-pill btn-warning">Modifier</button>-->
+                    <button type="button" class="btn rounded-pill btn-danger" (click)="supprimerPatient(i)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="!voirListesPatients">
+    <button type="button" class="btn rounded-pill btn-success" (click)="retour()">Retour</button>
+    <h2>Ajout d'un patient</h2>
+    <form class="form-horizontal" [formGroup]="PatientForm" (ngSubmit)="onEnregistrer()">
+        <div class=" form-group ">
+            <label class="control-label col-sm-2 " for="nom ">Nom:</label>
+            <div class="col-sm-10 ">
+                <input type="text" class="form-control " id="nom" placeholder="Le nom" name="nom" formControlName="nom" [(ngModel)]="patient.nom">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-2 " for="prenom">Prenom:</label>
+            <div class="col-sm-10 ">
+                <input type="text" class="form-control " id="prenom" placeholder="Le prénom" name="prenom" formControlName="prenom" [(ngModel)]="patient.prenom">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-2 " for="adresse">Adresse:</label>
+            <div class="col-sm-10 ">
+                <input type="text" class="form-control " id="adresse" placeholder="L' adresse" name="adresse" formControlName="adresse" [(ngModel)]="patient.adresse">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-2 " for="telephone">Téléphone:</label>
+            <div class="col-sm-10 ">
+                <input type="text" class="form-control " id="telephone" placeholder="Le numéro" name="telephone" formControlName="telephone" [(ngModel)]="patient.telephone">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-offset-2 col-sm-10 ">
+                <button type="submit" [disabled]="PatientForm.invalid" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+</div>

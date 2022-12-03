@@ -1,0 +1,62 @@
+<div *ngIf="afficherListeRdvs">
+    <h2> Listes des rendez-vous</h2>
+    <button type="button" class="btn rounded-pill btn-primary" (click)="afficherFormulaire()">Ajouter</button>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Date rendez-vous</th>
+                <th>Patient</th>
+                <th>Medecin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rdv of rdvs; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ rdv.dateRdv }}</td>
+                <td>{{ rdv.patient.nom }} {{ rdv.patient.prenom }}</td>
+                <td>{{ rdv.medecin.nom }} {{ rdv.medecin.prenom }}</td>
+                <td>
+                    <!--<button type="button" class="btn rounder-pill btn-warning">Modifier</button>-->
+                    <button type="button" class="btn rounded-pill btn-danger" (click)="supprimerRdv(i)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div *ngIf="!afficherListeRdvs">
+    <button type="button" class="btn rounded-pill btn-success" (click)="retour()">Retour</button>
+    <h2>Ajout d'un medecin</h2>
+    <form class="form-horizontal" (ngSubmit)="onEnregistrer()">
+        <div class=" form-group ">
+            <label class="control-label col-sm-2 " for="dateRdv">Date rendez-vous:</label>
+            <div class="col-sm-10 ">
+                <input type="date" class="form-control " id="dateRdv" name="dateRdv" [(ngModel)]="rdv.dateRdv">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-2 " for="patient">Patient:</label>
+            <div class="col-sm-8 form-group ">
+                <select class="form-control" id="patient" [(ngModel)]="rdv.patient" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let patient of patients" [ngValue]="patient">{{patient.nom}} {{patient.prenom}}</option>
+            </select>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-2 " for="medecin">Medecin:</label>
+            <div class="col-sm-8 form-group ">
+                <select class="form-control" id="medecin" [(ngModel)]="rdv.medecin" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let medecin of medecins" [ngValue]="medecin">{{medecin.nom}} {{medecin.prenom}}</option>
+              </select>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-offset-2 col-sm-10 ">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+</div>

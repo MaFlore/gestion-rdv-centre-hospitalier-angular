@@ -1,0 +1,49 @@
+<div *ngIf="voirListesSpecialites">
+    <h2> Listes des spécialités</h2>
+    <button type="button" class="btn rounded-pill btn-primary" (click)="afficherFormulaire()">Ajouter</button>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Code</th>
+                <th>Libelle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let specialite of specialites; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ specialite.code }}</td>
+                <td>{{ specialite.libelle }}</td>
+                <td>
+                    <!--<button type="button" class="btn rounder-pill btn-warning">Modifier</button>-->
+                    <button type="button" class="btn rounded-pill btn-danger" (click)="supprimerSpecialite(i)">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="!voirListesSpecialites">
+    <button type="button" class="btn rounded-pill btn-success" (click)="retour()">Retour</button>
+    <h2>Ajout d'une spécialité</h2>
+    <form class="form-horizontal" [formGroup]="SpecialiteForm" (ngSubmit)="onEnregistrer()">
+        <div class=" form-group ">
+            <label class="control-label col-sm-2 " for="code">Code:</label>
+            <div class="col-sm-10 ">
+                <input type="text" class="form-control " id="code" placeholder="Le code" name="code" formControlName="code" [(ngModel)]="specialite.code">
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="control-label col-sm-2 " for="libelle">Libelle:</label>
+            <div class="col-sm-10 ">
+                <input type="text" class="form-control " id="libelle" placeholder="Le libelle" name="libelle" formControlName="libelle" [(ngModel)]="specialite.libelle">
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-offset-2 col-sm-10 ">
+                <button type="submit" [disabled]="SpecialiteForm.invalid" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+</div>
